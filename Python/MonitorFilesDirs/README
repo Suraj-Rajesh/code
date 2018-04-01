@@ -1,0 +1,15 @@
+MONITOR FILES/DIRECTORIES CONTINUOUSLY FOR CHANGES/CREATION/DELETION
+---------------------------------------------------------------------
+
+$ pip install watchdog
+
+Run accompanying code as,
+    
+    $ python watcher.py <directory path>
+
+Note that watch happens only on directories. If a file path is provided, it
+would throw an error.
+
+Once watch starts, anytime file changes happen, like, modified, created etc, an
+events on_modified, on_created respectively are triggered. By over-riding these
+events, we can handle them as required, as in our example.

@@ -1,0 +1,56 @@
+1. Run below command from sample_package directory, to create a rpm
+
+# python setup.py bdist_rpm
+
+This will create necessary rpm of the Python package based on setup.py
+The rpm file will be found in dist/ as 'sample_package-1.0-1.noarch.rpm'
+
+2. Install rpm
+
+# rpm -i sample_package-1.0-1.noarch.rpm 
+
+3. Once installed, you can run it from anywhere
+
+    Appraoch 1:
+
+    # python
+    # from sample_package import core
+    # core.core_functionality()
+
+    Approach 2:
+
+    Since we have specified an entry point in our setup.py to create an
+    executable called 'sample_package_exec', which would be installed in
+    /usr/bin, you could call this executable from anywhere from your system.
+
+    # sample_package_exec
+
+NOTE: 
+
+To list all files installed in the rpm, just do,
+
+# rpm -ql sample_package   
+
+This shows that eventhough there is a binary to work with, the source files are
+shipped as well. Thus, if you need to ship your code and keep source away, this
+is not a good idea. Use something like pyinstaller instead to create a
+self-contaiend executable.
+
+Below url contains some common rpm command usage:
+
+https://www.tecmint.com/20-practical-examples-of-rpm-commands-in-linux/
+
+To verify if a rpm has been tampered with:
+
+$ rpm -V <package name>
+If exit code,
+   0 - verification successful
+   1 - tampered
+
+
+TO BUILD RPM FROM ANY OTHER DIRECTORY
+--------------------------------------
+
+rpmbuild --define "_topdir `pwd`/.." -ba $NAME.spec
+
+Define topdir to the rpmbuild/ directory.
