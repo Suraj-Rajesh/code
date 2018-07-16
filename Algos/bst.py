@@ -1,3 +1,5 @@
+prev=None
+
 class Node(object):
     def __init__(self, data):
         self.left = None
@@ -32,7 +34,6 @@ class Node(object):
             else:
                 return False
 
-
     def inorder(self):
         if self.left:
             self.left.inorder()
@@ -52,11 +53,12 @@ class Node(object):
         else:
             self.right = Node(data)
 
-    def check_if_bst_1(self, prev=None):
+    def check_if_bst_1(self):
+        global prev
         """Do inorder traversal. If a tree is BST, then inorder traversal 
            should yield ascending order. If not, then tree is not BST"""
         if self.left:
-            ret = self.left.check_if_bst(prev)
+            ret = self.left.check_if_bst_1()
             # here, need to stop recursion and return only if ret == no.
             # else, we need to continue to recurse
             if ret == 'no':
@@ -71,7 +73,7 @@ class Node(object):
             prev = self.data
 
         if self.right:
-            ret = self.right.check_if_bst(prev)
+            ret = self.right.check_if_bst_1()
             # here, need to stop recursion and return only if ret == no.
             # else, we need to continue to recurse
             if ret == 'no':
@@ -97,12 +99,21 @@ class Node(object):
             return False
 
 
+    def range(self, begin, end):
+        if self.data > begin:
+            if self.left:
+                self.left.range(begin, self.data)
+        if self.data <= end:
+            print self.data
+            if self.right:
+                self.right.range(self.data, end)
+
+
 if __name__ == '__main__':
     bst = Node(3)
 #    bst.insert(2)
    # bst.inorder()
     bst.insert_left(2)
     bst.insert_right(5)
-    bst.inorder()
-    print bst.check_if_bst_2(100, 0)
-    print bst.search(7)
+#    bst.inorder()
+    bst.range(2,4)
