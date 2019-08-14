@@ -1,0 +1,9 @@
+HEAP:
+
+- Insert O(logn) - we need to insert one by one when we don't have the full list with us. To insert n elements, O(nlogn).
+- If we are already aware of input array, we can create a heap using heapify, with better time complexity of O(n).
+- One heapify() call is of complexity O(logn). But, when creating a heap, we call it again and again for n/2 elements, thus, creation of heap is O(n), as specified above.
+- Delete O(logn).
+- Heapsort - we first create a heap( O(n) ). Then, delete n elements one by one O(nlogn) [deleting one element is O(logn), thus deleting n elements is O(nlogn)]
+Combining both, we get O(n) + O(nlogn). Considering the highest term, we get time complexity of heapsort to be,
+O(nlogn), which is the worst case. Also, since sorting happens in place, space complexity is O1).
