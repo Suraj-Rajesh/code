@@ -34,6 +34,7 @@ class Node(object):
             else:
                 return False
 
+    # L N R
     def inorder(self):
         if self.left:
             self.left.inorder()
@@ -41,6 +42,97 @@ class Node(object):
         if self.right:
             self.right.inorder()
 
+    def inorder_iterative(self):
+        # try to see how, recursive LNR is done iteratively
+        
+        stack = Stack()
+        current = self
+
+        # if no Node and stack is empty, it implies nothing to process
+        while current is not None or not stack.is_empty():
+            # keep on pushing left items to Stack (this is the L in LNR),
+            # recursing deeper on the Left
+            while current is not None:
+                stack.push(current)
+                current = current.left
+            
+            # this is the N in LNR, since we recursed till the end above
+            current = stack.pop()
+            print current.data
+
+            # this is the R in LNR, meaning, go to right and then again do, LNR
+            current = current.right
+    
+    # N L R
+    def preorder(self):
+        print self.data
+        if self.left:
+            self.left.preorder()
+        if self.right:
+            self.right.preorder()
+
+    def preorder_iterative(self):
+        # 1. Create stack by adding root element
+        # 2. Until stack is empty, do,
+        #        - Pop element and print
+        #        - (IMPORTANT): Add popped element's right and left(notice the order,
+        #           it is right, then left, not left and right) to stack
+
+        # HINT: PREorder. You can think of PRE as something that comes before. So, a
+        # normal order is Left then Right. When you see PRE, think, Right, then Left.
+        # So, always add Right first and then Left to stack in every iteration.
+        stack = Stack()
+        stack.push(self)
+
+        while not stack.is_empty():
+            popped_node = stack.pop()
+            print popped_node.data
+            
+            # IMPORTANT (see HINT)
+            if popped_node.right:
+                stack.push(popped_node.right)
+                
+            # IMPORTANT (see HINT)
+            if popped_node.left:
+                stack.push(popped_node.left)
+    
+    
+    # L R N
+    def postorder(self):
+        if self.left:
+            self.left.postorder()
+
+        if self.right:
+            self.right.postorder()
+
+        print self.data
+
+    def postorder_iterative(self):
+        # 1. Create stack by adding root element
+        # 2. Until stack is empty, do,
+        #        - Pop element and add it to front of result(see HINT below)
+        #        - Add popped element's left and right to stack
+
+        # HINT: POSTorder. While POSTing mails, a postman adds your
+        # posts to the front of the mailbox. Similarly, while creating the
+        # result array, add elements to the front(do not append to the back)
+        res_list = []
+        stack = Stack()
+        stack.push(self)
+
+        while not stack.is_empty():
+            popped_node = stack.pop()
+            # IMPORTANT (see HINT)
+            res_list.insert(0, popped_node.data)
+
+            if popped_node.left:
+                stack.push(popped_node.left)
+
+            if popped_node.right:
+                stack.push(popped_node.right)
+
+        return res_list
+                
     def insert_left(self, data):
         if self.left:
             self.left.insert_left(data)
