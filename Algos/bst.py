@@ -231,6 +231,15 @@ def depth(tree):
 
     return max(left_depth, right_depth) + 1
 
+def invert(tree):
+    if tree is None:
+        return
+
+    invert(tree.left)
+    invert(tree.right)
+
+    tree.left, tree.right = tree.right, tree.left
+
 if __name__ == '__main__':
     bst = Node(3)
 #    bst.insert(2)
