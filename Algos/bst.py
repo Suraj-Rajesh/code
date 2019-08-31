@@ -200,6 +200,36 @@ class Node(object):
             if self.right:
                 self.right.range(self.data, end)
 
+ def is_mirror(tree1, tree2):
+    # both trees are None, symmetric
+    if tree1 is None and tree2 is None:
+        return True
+
+    # one tree exists while the other is None, Assymetric
+    if tree1 is None or tree2 is None:
+        return False
+
+    # both tree values are same, recurse
+    if tree1.data == tree2.data:
+        check1 = is_mirror(tree1.left, tree2.right)
+        check2 = is_mirror(tree1.right, tree2.left)
+        return check1 and check2
+    # tree values differ, return False
+    else:
+        return False
+
+def is_symmetric(tree):
+    return is_mirror(tree, tree)
+
+# depth of a tree
+def depth(tree):
+    if tree is None:
+        return 0
+
+    left_depth = depth(tree.left)
+    right_depth = depth(tree.right)
+
+    return max(left_depth, right_depth) + 1
 
 if __name__ == '__main__':
     bst = Node(3)
