@@ -231,6 +231,7 @@ def depth(tree):
 
     return max(left_depth, right_depth) + 1
 
+
 def invert(tree):
     if tree is None:
         return
@@ -239,6 +240,20 @@ def invert(tree):
     invert(tree.right)
 
     tree.left, tree.right = tree.right, tree.left
+    
+   
+def merge(tree1, tree2):
+    if tree1 is None:
+        return tree2
+
+    if tree2 is None:
+        return tree1
+
+    tree1.data += tree2.data
+    tree1.left = merge(tree1.left, tree2.left)
+    tree1.right = merge(tree1.left, tree2.right)
+
+    return tree1
 
 if __name__ == '__main__':
     bst = Node(3)
