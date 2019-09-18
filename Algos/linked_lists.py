@@ -90,6 +90,30 @@ class Node(object):
             prev.next = head2
 
         return pal
+    
+def mergelists(l1, l2):
+    dummy = Node(0)
+    tail = dummy
+
+    while True:
+        if l1 is None:
+            tail.next = l2
+            break
+
+        if l2 is None:
+            tail.next = l1
+            break
+
+        if l1.val <= l2.val:
+            tail.next = l1
+            l1 = l1.next
+        else:
+            tail.next = l2
+            l2 = l2.next
+
+        tail = tail.next
+
+    return dummy.next
 
 head = Node(1)
 head.insert(2)
