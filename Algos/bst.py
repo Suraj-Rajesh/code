@@ -1,5 +1,3 @@
-prev=None
-
 class Node(object):
     def __init__(self, data):
         self.left = None
@@ -36,10 +34,9 @@ class Node(object):
 
     # L N R
     def inorder(self):
-        if self.left:
+        if self:
             self.left.inorder()
-        print self.data
-        if self.right:
+            print self.data
             self.right.inorder()
 
     def inorder_iterative(self):
@@ -254,6 +251,58 @@ def merge(tree1, tree2):
     tree1.right = merge(tree1.left, tree2.right)
 
     return tree1
+
+#
+# Is BST or not
+#
+def isBSTHelper(root, minval, maxval):
+    if root is None: return True
+
+    if minval < root.val < maxval:
+        return isBSTHelper(root.left, minval, root.val) and isBSTHelper(root.right, root.val, maxval)
+    else:
+        return False
+ 
+def isBST(root):
+    minval, maxval = float('-inf'), float('inf')
+    return isBSTHelper(root, minval, maxval)
+
+#
+# Inorder successor
+#
+def minval(node):
+    if node is None: return None
+
+    while node.left:
+        node = node.left
+    return node
+
+def inorder_successor(root, node):
+    # if node has right subtree, then inorder successor is min leftmost
+    # value of right subtree
+    if node.right:
+        return minval(node.right)
+
+    # if we reached here, it means node doesn't have right subtree
+    
+    # set successor to None, as we may not find any successor at all
+    # (this happens if node is rightmost node)
+    successor = None
+    
+    # modified search 
+    while root is not None:
+        # go deep in left subtree, setting & narrowing on successor
+        if node.val < root.val:
+            successor = root
+            node = node.left
+        # node is greater than root, then we need to find in right subtree
+        elif node.val > root.val:
+            node = node.right
+        else:
+            # its important to break here, as when node == root, we are done,
+            # else, this loop doesn't terminate
+            break
+    return successor
 
 if __name__ == '__main__':
     bst = Node(3)
