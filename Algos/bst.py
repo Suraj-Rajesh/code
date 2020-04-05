@@ -304,6 +304,43 @@ def inorder_successor(root, node):
             break
     return successor
 
+def insert(root, val):
+    if root is None:
+        return TreeNode(val)
+
+    if val < root.val:
+        root.left = insert(root.left, val)
+    elif val > root.val:
+        root.right = insert(root.right, val)
+    return root
+
+
+def delete_node(root, val):
+    def mintree(node):
+        while node.left is not None:
+            node = node.left
+        return node
+
+    if root is None: return None
+
+    if val < root.val:
+        root.left = delete_node(root.left, val)
+    elif val > root.val:
+        root.right = delete_node(root.right, val)
+    else:
+        if root.left is None:
+            return root.right
+        if root.right is None:
+            return root.left
+
+        # this node has both child's, so find inorder successor
+        # note that, this node has a right child, so inorder is just the
+        # minimum value of right subtree
+        inorder_successor = mintree(root.right)
+        root.val = inorder_successor.val
+        root.right = delete_node(root.right, inorder_successor.val)
+    return root
+
 if __name__ == '__main__':
     bst = Node(3)
 #    bst.insert(2)
