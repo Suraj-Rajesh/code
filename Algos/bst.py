@@ -35,9 +35,11 @@ class Node(object):
     # L N R
     def inorder(self):
         if self:
-            self.left.inorder()
+            if self.left:
+                self.left.inorder()
             print self.data
-            self.right.inorder()
+            if self.right:
+                self.right.inorder()
 
     def inorder_iterative(self):
         # try to see how, recursive LNR is done iteratively
@@ -62,11 +64,12 @@ class Node(object):
     
     # N L R
     def preorder(self):
-        print self.data
-        if self.left:
-            self.left.preorder()
-        if self.right:
-            self.right.preorder()
+        if self:
+            print self.data
+            if self.left:
+                self.left.preorder()
+            if self.right:
+                self.right.preorder()
 
     def preorder_iterative(self):
         # 1. Create stack by adding root element
@@ -96,13 +99,12 @@ class Node(object):
     
     # L R N
     def postorder(self):
-        if self.left:
-            self.left.postorder()
-
-        if self.right:
-            self.right.postorder()
-
-        print self.data
+        if self:
+            if self.left:
+                self.left.postorder()
+            if self.right:
+                self.right.postorder()
+            print self.data
 
     def postorder_iterative(self):
         # 1. Create stack by adding root element
@@ -176,13 +178,11 @@ class Node(object):
         left_ret = True
         right_ret = True
 
-        if self.data < maximum and self.data > minimum:
+        if minimum < self.data < maximum:
             if self.left:
                 left_ret = self.left.check_if_bst_2(self.data, minimum)
-
             if self.right:
                right_ret = self.right.check_if_bst_2(maximum, self.data)
-
             return left_ret and right_ret
         else:
             return False
@@ -256,7 +256,8 @@ def merge(tree1, tree2):
 # Is BST or not
 #
 def isBSTHelper(root, minval, maxval):
-    if root is None: return True
+    if root is None:
+        return True
 
     if minval < root.val < maxval:
         return isBSTHelper(root.left, minval, root.val) and isBSTHelper(root.right, root.val, maxval)
@@ -314,6 +315,25 @@ def insert(root, val):
         root.right = insert(root.right, val)
     return root
 
+def inorder_successor_2(root, node):
+    """in-order successor of a node is one that appears next during in-order traversal"""
+    successor = None
+    while root:
+        #
+        # if node value greater or equal to current node, it means, successor
+        # is somewhere on the right subtree. Note the >= instead of >
+        #
+        if node.val >= root.val:
+            root = root.right
+        #
+        # if node value is less than current node, then, current node being greater
+        # than this node value is a potential successor. Keep searching on the left
+        # subtree
+        #
+        else:
+            successor = root
+            root = root.left
+    return successor
 
 def delete_node(root, val):
     def mintree(node):
