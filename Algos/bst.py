@@ -335,6 +335,28 @@ def inorder_successor_2(root, node):
             root = root.left
     return successor
 
+def lca(root, p, q):
+    if root is None:
+        return None
+
+    if p.val < root.val and q.val < root.val:
+        return lca(root.left, p, q)
+    elif p.val > root.val and q.val > root.val:
+        return lca(root.right, p, q)
+    else:
+        #
+        # if either of above cases are not hit and we are here, it could be either one of two
+        #   
+        #   1. root is the LCA, and it cleaves p and q, as in, either
+        #        a. p.val < root.val < q.val
+        #        b. q.val < root.val < p.val
+        #
+        #   2. root itself is one of these two nodes, hence this node itself is the LCA, as in, either,
+        #        a. root.val == p.val
+        #        b. root.val == q.val
+        #
+        return root
+
 def delete_node(root, val):
     def mintree(node):
         while node.left is not None:
