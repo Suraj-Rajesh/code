@@ -196,6 +196,39 @@ class Node(object):
             print self.data
             if self.right:
                 self.right.range(self.data, end)
+                
+  class rangeSumBSTSolution(object):
+    def __init__(self):
+        self.sum = 0
+
+    def rangeSumBST(self, root, low, high):
+        if root:
+            if low <= root.val <= high:
+                self.sum += root.val
+
+            #
+            # check left subtree only if there is a chance of finding range values.
+            # If "low" value > root value, then, we will not find any value to the lef
+            # left that falls in the range,
+            # since all left values would be < root value
+            #
+            # in other words, all left values < root.value < low -> so no need to
+            # traverse left
+            #
+            if low < root.val:
+                self.rangeSumBST(root.left, low, high)
+            #
+            # check right subtree only if there is a chance of finding range values.
+            # If root value > "high" value, then, we will not find any value to the
+            # right that falls in the range,
+            # since all right values would be > root value
+            #
+            # in other words, high < root.value < all right values -> so no need to
+            # traverse right
+            #
+            if root.val < high:
+                self.rangeSumBST(root.right, low, high)
+        return self.sum
 
  def is_mirror(tree1, tree2):
     # both trees are None, symmetric
