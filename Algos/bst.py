@@ -349,7 +349,7 @@ def insert(root, val):
     return root
 
 def inorder_successor_2(root, node):
-    """in-order successor of a node is one that appears next during in-order traversal"""
+    """PREFERRED: in-order successor of a node is one that appears next during in-order traversal"""
     successor = None
     while root:
         #
@@ -415,6 +415,38 @@ def delete_node(root, val):
         root.val = inorder_successor.val
         root.right = delete_node(root.right, inorder_successor.val)
     return root
+
+def sortedArrayToBalancedBST(array):
+    def helper(begin, end):
+        root = None
+
+        #
+        # this condition where, begin == end should also be checked, for
+        # those conditions where there are even number of elements in the
+        # array and we have to account for that particular element too
+        # that both begin & end is pointing to.
+        #
+        # For example, if array = [1, 2]
+        #
+        # begin = 0, end = 1 and mid = 0, so 1 will be root
+        # next, for,
+        #
+        # root.right = helper(mid + 1, end), both begin & end will be at
+        # index 1, pointing to 2
+        #
+        if begin <= end:
+            #
+            # since array is sorted & we need balanced tree, we need to
+            # keep the middle element as root, so it remains balanced
+            # for root node and all sub-trees on the left & right
+            #
+            mid = begin + (end - begin)//2
+            root = Node(array[mid])
+            root.left = helper(begin, mid - 1)
+            root.right = helper(mid + 1, end)
+            return root
+
+    return helper(0, len(array) - 1)
 
 if __name__ == '__main__':
     bst = Node(3)
