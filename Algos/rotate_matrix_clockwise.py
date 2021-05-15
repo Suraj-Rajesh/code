@@ -22,6 +22,7 @@ class Solution:
         for r in range(n//2):
             
             # take each group of 4 elements to rotate (give special attention here, if n = 4, x = 0, then we iterate only 3 times)
+            # note that n below always accompanied by -1, so we see n - 1 everywhere n is used
             for c in range(r, n - 1 - r):
                 tmp                          = matrix[r][c]
                 matrix[r][c]                 = matrix[n -1 - c][r]
