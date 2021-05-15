@@ -4,6 +4,15 @@
 #
 # Look at Solution() for in-place
 #
+def rotate_clockwise_extra_space(matrix):
+    n = len(matrix)
+    rows = cols = n
+    out_matrix = [[0 for _ in range(rows)] for _ in range(cols)]
+    for r in range(n):
+        for c in range(n):
+            out_matrix[c][n - 1 - r] = matrix[r][c]
+    return out_matrix
+
 def rotate_anti_clockwise_extra_space(matrix):
     n = len(matrix)
     rows = cols = n
