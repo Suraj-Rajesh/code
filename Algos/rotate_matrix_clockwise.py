@@ -1,5 +1,8 @@
 #
-# this solution takes extra space for out matrix. Look at Solution() for in-place
+# this solution takes extra space for out matrix
+# If we look at the input & output matrices, rows & cols get switched up, which is what we are doing here
+#
+# Look at Solution() for in-place
 #
 def rotate_anti_clockwise_extra_space(matrix):
     n = len(matrix)
