@@ -1,20 +1,50 @@
+#
+# this solution takes extra space for out matrix. Look at Solution() for in-place
+#
+def rotate_anti_clockwise_extra_space(matrix):
+    n = len(matrix)
+    rows = cols = n
+    out_matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+
+    for r in range(n):
+        for c in range(n):
+            out_matrix[n - 1 - c][r] = matrix[r][c]
+    return out_matrix
+
 class Solution:
-    def rotate(self, matrix: List[List[int]]) -> None:
+    def rotate_clockwise(self, matrix: List[List[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
         n = len(matrix[0])
         
         # there will be floor(n/2) squares that we would need to deal with
-        for x in range(n//2):
+        for r in range(n//2):
             
-            # take each group of 4 elements to rotate
-            for y in range(x, n - 1 - x):
-                tmp                         = matrix[x][y]
-                matrix[x][y]                = matrix[n -1 - y][x]
-                matrix[n - 1 - y][x]        = matrix[n - 1 -x][n - 1 - y]
-                matrix[n - 1 - x][n - 1 -y] = matrix[y][n - 1 - x]
-                matrix[y][n - 1 - x]        = tmp
+            # take each group of 4 elements to rotate (give special attention here, if n = 4, x = 0, then we iterate only 3 times)
+            for c in range(r, n - 1 - r):
+                tmp                          = matrix[r][c]
+                matrix[r][c]                 = matrix[n -1 - c][r]
+                matrix[n - 1 - c][r]         = matrix[n - 1 -r][n - 1 - c]
+                matrix[n - 1 - r][n - 1 - c] = matrix[c][n - 1 - r]
+                matrix[c][n - 1 - r]         = tmp
+                
+    def rotate_anti_clockwise(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix[0])
+        
+        # there will be floor(n/2) squares that we would need to deal with
+        for r in range(n//2):
+            
+            # take each group of 4 elements to rotate (give special attention here, if n = 4, x = 0, then we iterate only 3 times)
+            for c in range(r, n - 1 - r):
+                tmp                      = matrix[r][c]
+                matrix[r][c]             = matrix[c][n -1 -r]
+                matrix[c][n -1 -r]       = matrix[n -1 -r][n -1 -c]
+                matrix[n -1 -r][n -1 -c] = matrix[n -1 - c][r]
+                matrix[n -1 -c][r]       = tmp
                 
             #
             # INPUT MATRIX
