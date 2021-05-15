@@ -89,17 +89,17 @@ class Solution:
             #  2, 8,  9, 15 rotate
             #  3, 12, 14, 5 rotate
             #
-            # In one square, these movements happen x -> (n - 2 - x) times, hence the second loop, for y in range(x, n - 1 -x): (remember in range, last element is not included).
+            # In one square, these movements happen r -> (n - 2 - r) times, hence the second loop, for c in range(r, n - 1 - c): (remember in range, last element is not included).
             # For example, if you take x = 0, then above, we need three iterations, which is 0 -> (4 - 2 - 0) = 0 -> 2.
             #
             # To arrive at co-ordinates, take the second set of elements in a 4 * 4 matrix.
             # In our case, it would be 2, 8, 9, 15
             #
-            # Start with first element 2, (x, y) = (0, 1) = 2
-            # Now, we have, x = 0, y = 1, use that to derive the rest,
-            # 8 = (1, 3), which in terms of x and y is, (y, n - 1 -x) [NOTE: we do -x to (n - 1), since we loop and the square becomes smaller]
-            # 15 = (3, 2) = (n - 1 - x, n - 1 - y)
-            # 9 = (2, 0) = (n - 1 - y, x)
+            # Start with first element 2, (r, c) = (0, 1) = 2
+            # Now, we have, r = 0, c = 1, use that to derive the rest,
+            # 8 = (1, 3), which in terms of r and c is, (c, n - 1 - r) [NOTE: we do -r to (n - 1), since we loop and the square becomes smaller]
+            # 15 = (3, 2) = (n - 1 - r, n - 1 - c)
+            # 9 = (2, 0) = (n - 1 - c, r)
             #
             # Once we have them, all we need is to swap, by having just one temp variable.
             #
