@@ -2,7 +2,7 @@
 # https://leetcode.com/problems/range-sum-query-immutable/
 #
 
-a = [1, 2, 3]
+nums = [1, 2, 3]
 
 class NumArray(object):
 
@@ -25,5 +25,5 @@ class NumArray(object):
     def sumRange(self, left, right):
         return self.sums[right + 1] - self.sums[left]
 
-n = NumArray(a)
+n = NumArray(nums)
 print(n.sumRange(0, 2))

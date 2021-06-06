@@ -2,7 +2,7 @@
 # https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 #
 
-# NOTE: only one transaction allowed, not multiple
+# note: only one transaction allowed, not multiple
 
 prices = [7, 1, 5, 3, 6, 4]
 
